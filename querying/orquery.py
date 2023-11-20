@@ -27,23 +27,10 @@ class OrQuery(QueryComponent):
             while index1 < len(recent_term_posting_list) and index2 < len(next_posting_list):
                 # Check if IDs are equal to each other or not
                 if recent_term_posting_list[index1].doc_id == next_posting_list[index2].doc_id:
-                    new_position_list = []
+                    #TODO: What to do with position list?? OR all positions?
+                    new_position_list = sorted(recent_term_posting_list[index1].position_list + next_posting_list[index2].position_list)
 
-                    # Merge position lists into one list, sorted in order
-                    for position1 in recent_term_posting_list[index1].position_list:
-                        for position2 in next_posting_list[index2].position_list:
-                            if position1 not in new_position_list:
-                                new_position_list.append(position1)
-                            
-                            if position2 not in new_position_list:
-                                new_position_list.append(position2)
-
-                    new_position_list = sorted(new_position_list)
-
-                    # Only add the combined position list if there is atleast more than one position in either list
-                    if len(new_position_list) > 0:
-                        #print(recent_term_posting_list[index1].doc_id, new_position_list)
-                        results.append(Posting(recent_term_posting_list[index1].doc_id, new_position_list))
+                    results.append(Posting(recent_term_posting_list[index1].doc_id, new_position_list))
 
                     # Append both indexes
                     index1 += 1
