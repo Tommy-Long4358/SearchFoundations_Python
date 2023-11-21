@@ -48,12 +48,14 @@ if __name__ == "__main__":
         menu_num = int(input("\nMenu:\n1. Search Word\n2. Quit\nEnter an option: "))
 
         if menu_num == 1:
-            query = str(input("Enter a term to search: "))
+            # Input term has to be lowercased since tokens were lowercasesd
+            query = str(input("Enter a term to search: ")).lower()
 
             query_type = query_parser.parse_query(query)
 
             print(query_type)
             print("\nSearch Results:")
+            print(query_type.get_postings(index))
 
             # Has to be of Posting type
             for posting in query_type.get_postings(index):
